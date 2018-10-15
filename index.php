@@ -1,16 +1,13 @@
 <?php
 
-require_once("loader/loader.php");
+require_once("middleware/middleware.php");
 
-mod\load_module("config");
-mod\load_module("database");
+APP\configMiddleware();
+APP\load_module("DB");
+APP\modstat();
 
-$db = DB\create_db();
-
-//$db->connect();
-$db->create();
-
-echo $db->get_query_string();
-
-
+$DB = DB\createDatabase();
+$DB->connect();
+//$DB->query()->create($DB)->send();
+//DB\createMigrations($DB);
 ?>

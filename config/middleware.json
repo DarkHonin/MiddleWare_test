@@ -1,0 +1,7 @@
+{
+	"MIDDLEWARE" : {
+		"DB" : "database",
+		"FRONT" : "frontend",
+		"AUTH" : "authentication"
+	}
+}
