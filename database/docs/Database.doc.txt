@@ -1,0 +1,30 @@
+###############################
+
+    Class   :   DB\Database     [FINAL]
+
+###############################
+
+__construct(    array = [
+                            Username
+                            Password
+                            Database
+                        ] )
+
+++++++++++++++++++++++
+Description
+-------------
+
+    The class serves as the transport layer in interacting
+    with the database.  It handles requests and response 
+    only.
+
+++++++++++++++++++++++
+Methods
+-------------
+
+    connect(Void)               : Instantiates the configured connection
+                                  with the database.
+
+    get_database_name(void)     : Returns the name of the database
+
+++++++++++++++++++++++
