@@ -27,7 +27,7 @@ abstract class DataObject{
 	}
 
 	abstract function get_data_fields() : array;
-	
+
 	abstract function get_query_string(): string;
 
 	function assemble(){

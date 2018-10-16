@@ -11,7 +11,11 @@ function DB_Connect($pass, $user, $db){
 	try {
 		$pdo = new PDO($dsn, $user, $pass, $options);
 	} catch (\PDOException $e) {
-		throw new \PDOException($e->getMessage(), (int)$e->getCode());
+		switch ($e->getCode()){
+			case "2002":
+				die ("Failed to connect to database server");
+		}
+		
 	}
 	return $pdo;
 }

@@ -7,13 +7,18 @@ abstract class Query extends DataObject{
 	private const QUERY_STRINGS = [
 		"SELECT" => "SELECT :what FROM :table",
 		"WHERE" => "WHERE :query",
-		"CREATE_TABLE" => "CREATE TABLE :ine `:tdname`",
+		"CREATE_TABLE" => "CREATE TABLE :ine `:tdname` ( :cols )",
 		"CREATE_DB" => "CREATE DATABASE :ine `:tdname`",
-		"TABLE_ROW_DEF" => "( :cols )"
+		"INSERT" =>	"INSERT INTO :table ( :cols ) VALUES ( \":vals \")"
 	];
 
 	private $_query_stack = [];
+	private $_query = null;
 	private $_table;
+
+	private $_errorhanlders = [
+		"HY000" => "onEmptyReponse"
+	];
 
 	function __construct($name){
 		parent::__construct($name, []);
@@ -27,7 +32,8 @@ abstract class Query extends DataObject{
 			"query" => "",
 			"ine" => "",
 			"tdname" => "",
-			"cols" => ""
+			"cols" => "",
+			"vals" => ""
 		];
 	}
 
@@ -37,24 +43,37 @@ abstract class Query extends DataObject{
 
 	protected function push_query($q){
 		array_push($this->_query_stack, Query::QUERY_STRINGS[$q]);
+		$this->_query = $q;
 	}
 
 	function send(){
 		$raw = Database::$DB->send_SQL($this);
+		$data = null;
 		try {
-			$data = $raw->fetch();
-			var_dump($data);
+			$data = $this->retrieve($raw);
 		}	catch (\PDOException $e){
-			echo "Whoops\n";
+			print_r($e->getCode());
+			$str = $this->_errorhanlders[$e->errorInfo[0]];
+			if($this->$str($e)) die ("Crittical error :: $str");
 		}
 		$raw->closeCursor();
 		$this->_query_stack = [];
+		return $data;
 	}
-	abstract function select($what="*"): Query;
-	abstract function insert(Table $table): Query;
-	abstract function update(Table $table): Query;
-	abstract function create(DataObject $o): Query;
 
+	protected function get_query_type(){
+		return $this->_query;
+	}
+
+	abstract function onEmptyReponse(\PDOException $e) : bool;
+
+	abstract function select($what="*"): Query;
+	abstract function insert(): Query;
+	abstract function update(): Query;
+	abstract function create(): Query;
+	protected abstract function retrieve(\PDOStatement $a);
+
+	/*
 	function create(DataObject $obj){
 		if ($obj instanceof Table)
 			$this->push_query("CREATE_TABLE");
@@ -63,7 +82,7 @@ abstract class Query extends DataObject{
 		$this->add_data($obj->get_name(), "tdname");
 		return $this;
 	}
-
+*/
 	function if_not_exists(){
 		$this->add_data("IF NOT EXISTS", "ine");
 		return $this;
