@@ -1,22 +1,24 @@
 <?php
 
-class User extends DB\Table{
-	function __construct($db){
-		parent::__construct("Users", $db);
+use DB\Table;
+use DB\Column;
+
+class User extends Table{
+
+	function __construct(){
+		parent::__construct("Users");
 	}
 
-	function migrate(DB\TableQuery $q){
-		$ID = new DB\TableData("id", "INT");
-		$NAME = new DB\TableData("username", "VARCHAR");
-		$TOKEN = new DB\TableData("sessiontoken", "VARCHAR");
-
-		$ID->size(32)->P()->AI();
-		$NAME->size(32)->U();
-		$TOKEN->size(255);
-		
-		$q->addField($ID);
-		$q->addField($NAME);
-		$q->addField($TOKEN);
+	function load_cols(){
+		$this->primairyKey(new Column("id",[
+			"t" => "INT",
+			"s" => 32,
+			"ai" => "AUTO_INCREMENT"
+		]));
+		$this->uniqueKey(new Column("username",[
+			"t" => "VARCHAR",
+			"s" => 32
+		]));
 	}
 }
 

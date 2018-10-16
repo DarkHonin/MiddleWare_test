@@ -25,7 +25,9 @@ function load_module($ID){
         $of = strripos($d, ".php");
         if($of > 0)
             require_once($middleware[$ID]."/classes/".$d);
-	}
+    }
+    $init = "$ID\\init";
+    $init();
 }
 
 

@@ -2,24 +2,15 @@
 
 namespace DB;
 
-function createDatabase(){
+function init(){
 	$cfg = \CFG\readConfig("database");
-	return new Database($cfg);
+	DataObject::$DB = new Database("Camagru");
+	DataObject::$DB->connect();
+	$q = new Query("QQ");
+	$q->create(DataObject::$DB)->if_not_exists()->send();
+	DataObject::$DB->useDatabase();
+	echo "Database init\n";
 }
 
-function createMigrations($db){
-	$dir = "app/migrations";
-	foreach(scandir($dir) as $d){
-        $of = strripos($d, ".php");
-        if($of > 0){
-			require_once($dir."/".$d);
-			$tname = substr($d, 1, stripos($d, ".") - 1);
-			$table = new $tname($db);
-			$query = $table->get_query();
-			$table->migrate($query);
-			$query->create($table)->send();
-		}
-	}
-}
 
 ?>
