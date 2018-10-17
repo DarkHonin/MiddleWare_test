@@ -4,8 +4,12 @@ namespace DB;
 
 abstract class Table extends Query{
 
+	public static $TABLES = [];
+
 	private $_cols = [];
 	private $_unique = [];
+	private $_altered = [];
+	private $_foreign = [];
 	private $_primairy = null;
 
 	function __construct($name){
@@ -16,6 +20,7 @@ abstract class Table extends Query{
 	final function set(array $values){
 		foreach($values as $k=>$v)
 			$this->$k = $v;
+		$this->_altered = array_keys($values);
 	}
 
 	function create() : Query{
@@ -26,6 +31,8 @@ abstract class Table extends Query{
 			array_push($cols, $q);
 		foreach (array_keys($this->_unique) as $k)
 			array_push($cols, "UNIQUE($k)");
+		foreach ($this->_foreign as $id=>$k)
+			array_push($cols, "FOREIGN KEY ($id) REFERENCES $k");
 		array_push($cols, "PRIMARY KEY (".$this->_primairy->get_name().")");
 		$this->add_data(implode(", ",$cols), "cols");
 		return $this;
@@ -64,6 +71,12 @@ abstract class Table extends Query{
 			$this->_primairy = $col;
 	}
 
+	protected function foreignKey(Column $col, $ref){
+		if(!isset($this->_cols[$col->get_name()]))
+			$this->register_col($col);
+		$this->_foreign[$col->get_name()] = $ref;
+	}
+
 	protected function retrieve(\PDOStatement $a){
 		return $a->fetchAll(\PDO::FETCH_CLASS, get_class($this));
 	}
@@ -83,7 +96,16 @@ abstract class Table extends Query{
 	}
 
 	function update(): Query{
-
+		$this->push_query("UPDATE");
+		$this->add_data($this->get_name(), "table");
+		$keys = array_keys($this->_cols);
+		$keys = array_reverse($keys, true);
+		array_pop($keys);
+		$pars = [];
+		foreach ($keys as $k)
+			array_push($pars, "$k='{$this->$k}'");
+		$this->add_data(implode(", ",$pars), "set");
+		return $this;
 	}
 
 	function onEmptyReponse(\PDOException $e) : bool{

@@ -3,6 +3,7 @@
 namespace App;
 
 require_once("config/configreader.php");
+require_once(__DIR__."/app.php");
 
 $middleware = [];
 
@@ -14,22 +15,24 @@ function configMiddleware(){
 }
 
 function load_module($ID){
-	global $middleware;
-    foreach(scandir($middleware[$ID]) as $d){
-        $of = strripos($d, ".php");
-        if($of > 0)
-            require_once($middleware[$ID]."/".$d);
-	}
-	if(file_exists($middleware[$ID]."/classes"))
-		foreach(scandir($middleware[$ID]."/classes") as $d){
-        $of = strripos($d, ".php");
-        if($of > 0)
-            require_once($middleware[$ID]."/classes/".$d);
-    }
+    global $middleware;
+    load_files($middleware[$ID]);
+    if(file_exists($middleware[$ID]."/classes"))
+        load_files($middleware[$ID]."/classes");
     $init = "$ID\\init";
     $init();
 }
 
+function load_files($dir, $callback=null){
+    foreach(scandir($dir) as $d){
+        $of = strripos($d, ".php");
+        if($of > 0){
+            require_once($dir."/".$d);
+            if($callback)
+                $callback($d);
+        }
+	}
+}
 
 function modstat(){
     global $middleware;

@@ -2,6 +2,9 @@
 	"MIDDLEWARE" : {
 		"DB" : "database",
 		"FRONT" : "frontend",
-		"AUTH" : "authentication"
+		"AUTH" : "authentication",
+		"ACCESS" : "access"
 	}
+
+	
 }
