@@ -7,6 +7,8 @@ require_once("Query.class.php");
 
 abstract class Database extends Query{
 
+	static $DB;
+
 	private $_pdo;
 	private $_last_raw;
 	private $_DB_OK = false;
@@ -38,7 +40,6 @@ abstract class Database extends Query{
 			die();
 		}
 		$query = $dt->assemble();
-		print_r($query);
 		$raw = $this->_pdo->prepare($query);
 		$raw->execute();
 		return $raw;

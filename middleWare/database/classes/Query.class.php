@@ -2,7 +2,7 @@
 
 namespace DB;
 
-abstract class Query extends DataObject{
+abstract class Query extends \App\DataObject{
 
 	private const QUERY_STRINGS = [
 		"SELECT" => "SELECT :what FROM :table",

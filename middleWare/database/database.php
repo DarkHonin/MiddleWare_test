@@ -10,20 +10,23 @@ function handle_migration_name($d){
 
 function init(){
 	$cfg = \CFG\readConfig("database");
-	DataObject::$DB = new MySQLDB("Camagru");
-	DataObject::$DB->connect($cfg['username'], $cfg['password']);
-	DataObject::$DB->useDatabase();
+	Database::$DB = new MySQLDB("Camagru");
+	Database::$DB->connect($cfg['username'], $cfg['password']);
+	Database::$DB->useDatabase();
 	foreach($cfg["migrations"] as $m)
 		if(file_exists($m))
 			\APP\load_files($m, "DB\\handle_migration_name");
 }
 
 function install(){
-	DataObject::$DB->create(DataObject::$DB)->if_not_exists()->send();
-	DataObject::$DB->useDatabase();
+	echo "Installing database\n";
+	Database::$DB->create(Database::$DB)->if_not_exists()->send();
+	Database::$DB->useDatabase();
 	foreach(Table::$TABLES as $id=>$table)
 		$table->create()->if_not_exists()->send();
 }
 
-
+function get_table($name){
+	return clone Table::$TABLES[$name];
+}
 ?>

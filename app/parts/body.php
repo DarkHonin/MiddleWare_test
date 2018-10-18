@@ -1,7 +1,13 @@
-<?php FRONT::stitch("head") ?>
+<?php FRONT::load_part("head")->post() ?>
 
 <body>
 
-<?php echo "body" ?>
+
+
+<?php
+FRONT::load_part("sidebar")->post();
+FRONT::section("content");
+FRONT::load_part("sidebar")->post();
+?>
 
 </body>

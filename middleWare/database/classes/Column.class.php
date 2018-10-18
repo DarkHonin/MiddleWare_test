@@ -2,9 +2,7 @@
 
 namespace DB;
 
-require_once("DataObject.class.php");
-
-class Column extends DataObject{
+class Column extends \App\DataObject{
 
 	private const _FORMAT = ":name :t(:s) :n :d :ai";
 

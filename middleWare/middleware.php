@@ -11,7 +11,8 @@ function configMiddleware(){
 	$mods = \CFG\readConfig("middleware");
 	global $middleware;
 	foreach($mods["MIDDLEWARE"] as $ID => $mod)
-		$middleware[$ID] = __DIR__."/$mod";
+        $middleware[$ID] = __DIR__."/$mod";
+    load_files(__DIR__."/classes");
 }
 
 function load_module($ID){

@@ -1,0 +1,44 @@
+html{
+    background-color: blanchedalmond;
+}
+
+body{
+    display: flex;
+    margin: 0px;
+    height: 99.9vh;
+}
+
+.content{
+    flex: 2;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
+    position: relative;
+}
+
+.sidebar{
+    flex: 1;
+    background-color: rgb(221, 194, 154);
+    box-shadow: rgb(221, 194, 154) 0px 0px 10px 0px;
+    max-width: 200px;
+    height: 100%;
+}
+
+.pnav{
+    text-wrap: nowrap;
+    vertical-align: bottom;
+    list-style: none;
+    display: flex;
+    position: absolute;
+    padding: 5px;
+    width: 100%;
+    left: 0px;
+    bottom: 1em;
+    background-color: #9c5a217d;
+    box-shadow: inset rgb(93, 68, 32) 0px 0px 10px 0px;
+}
+
+.pnav>li{
+    padding: 2px;
+    margin: auto;
+}

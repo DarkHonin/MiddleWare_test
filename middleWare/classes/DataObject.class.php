@@ -1,10 +1,8 @@
 <?php
 
-namespace DB;
+namespace App;
 
 abstract class DataObject{
-
-	static $DB;
 
 	private $_name;
 	private $_data;
@@ -22,7 +20,7 @@ abstract class DataObject{
 
 	function get_data(){return $this->_data;}
 
-	protected function add_data($data, $key){
+	final function add_data($data, $key){
 		$this->_data[$key] = $data;
 	}
 

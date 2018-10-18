@@ -1,7 +1,7 @@
 <?php
 
 function DB_Connect($pass, $user, $db){
-	$host = '127.0.0.1';
+	$host = 'localhost';
 	$dsn = "mysql:host=$host";//;dbname=$db
 	$options = [
 		PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION ,
@@ -11,11 +11,7 @@ function DB_Connect($pass, $user, $db){
 	try {
 		$pdo = new PDO($dsn, $user, $pass, $options);
 	} catch (\PDOException $e) {
-		switch ($e->getCode()){
-			case "2002":
-				die ("Failed to connect to database server");
-		}
-		
+		throw $e;
 	}
 	return $pdo;
 }

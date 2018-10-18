@@ -41,7 +41,7 @@
 		}
 		if(!isset(Entry::$ENTRIES[$id])){
 			header("HTTP/1.0 404 Not Found");
-			$id = "404";
+			$id = "/404";
 		}
 		$class = Entry::$ENTRIES[$id];
 		$obj = new $class();
@@ -55,7 +55,7 @@
 					break;
 			}
 		} catch (RestrictError $e){
-			redirect("403");
+			redirect("/403");
 		}
 
 		$obj->render();
