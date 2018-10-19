@@ -15,7 +15,7 @@ class Post extends DB\Table{
 			"t" => "VARCHAR",
 			"s" => 32
 		]));
-		$this->foreignKey(new Column("auther", [
+		$this->foreignKey(new Column("author", [
 			"t" => "INT",
 			"s" => 32
 		]), "Users(id)");

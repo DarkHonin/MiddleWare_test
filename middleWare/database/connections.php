@@ -11,6 +11,8 @@ function DB_Connect($pass, $user, $db){
 	try {
 		$pdo = new PDO($dsn, $user, $pass, $options);
 	} catch (\PDOException $e) {
+		if($e->getCode() == 2002)
+			die("Could not connect to database");
 		throw $e;
 	}
 	return $pdo;
