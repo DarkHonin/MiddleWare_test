@@ -48,6 +48,16 @@ class User extends Table implements Form{
 	function get_create_fields() : array{
 		return ["Username"=>$this->get_col("username"), "Email"=>$this->get_col("email"), "Password"=>$this->get_col("pass")];
 	}
+    function get_method(){
+		return "POST";
+	}
+    function get_token(){
+		return md5($this->get_name());
+	}
+
+	function validate(){
+		
+	}
 }
 
 

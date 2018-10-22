@@ -6,6 +6,7 @@ class ERegister extends Entry{
 
 	function __construct(){
 		APP\load_module("DB");
+		APP\load_module("FRONT");
 	}
 
 	static function get_ID(){
@@ -14,7 +15,16 @@ class ERegister extends Entry{
 
 	function render(){
 		$form = \DB\Table::$TABLES['Users'];
-		include_once("app/parts/register.php");
+		$elem = new \FRONT\Runner("app/parts/page.php", [
+			"children" => [
+				"app/parts/body.php" =>[
+					"children" => [
+						$form
+					]
+				]
+			]
+		]);
+		$elem->build();
 	}
 	
 	function get($params){

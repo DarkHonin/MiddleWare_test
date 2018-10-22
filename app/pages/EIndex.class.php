@@ -18,27 +18,26 @@ class EIndex extends Entry{
 	}
 
 	function render(){
-		$elem = new \FRONT\Runner("app/parts/page.php", ['data'=>	[
-			"content" => [
-				"app/parts/index.php"=>[
-					"data"=>
-						[
-							"posts"=>$this->_posts,
-						],
+		$elem = new \FRONT\Runner("app/parts/page.php", [
+			"children" => [
+				"app/parts/body.php" => 
+				[
+					"children" => [
+						"app/parts/index.php"=>[
+						"posts"=>$this->_posts,
 						"children" =>[
 							"app\parts\pagenagtion.php" => [
-								"data" =>[
 									"pages"=>5,
 									"current"=>$this->_page,
 									"start"=>1
-									]
 								]
 						]
 					],
 				"app/parts/sidebar.php"=>[]
+				]
+				]
 				],
-				
-		]]);
+		]);
 		$elem->build();
 	}
 	

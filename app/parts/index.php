@@ -4,6 +4,11 @@
 include_once("head.php");
 ?>
 <div class='content'>
-	<?php $self->children() ?>
+	<?php 
+	
+		foreach($self->item("posts") as $post){
+			$self->child("app/parts/post.php", ["data"=> ["item"=>$post]]);
+		}
+	$self->children() ?>
 </div>
 

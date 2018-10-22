@@ -1,7 +1,5 @@
 <div class='sidebar'>
-    Sidebar
-</div>
-
 <?php
-
-?>
+    $self->child("app/parts/menue.php", []);
+?>  
+</div>

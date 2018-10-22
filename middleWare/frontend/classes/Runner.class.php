@@ -19,19 +19,28 @@ class Runner{
 
 	function children(){
 		$data = $this->_data;
+		
 		if(isset($data['children']))
-			foreach($data['children'] as $path=>$data){
-				$r = new Runner($path, $data);
-				$r->build();
+			foreach($data['children'] as $path=>$i){
+				if($i instanceof \FRONT\Runner)
+					$i->build();
+				else if($i instanceof Form)
+					FRONT::render_form($i);
+				else if(file_exists($path)){
+					$r = new Runner($path, $i);
+					$r->build();
+				}
 			}
 	}
 
 	function eitem($itemId){
-		echo $this->_data["data"][$itemId];
+		if(isset($this->_data[$itemId]))
+				echo $this->_data[$itemId];
 	}
 
 	function item($itemId){
-		return $this->_data["data"][$itemId];
+		if(isset($this->_data[$itemId]))
+			return $this->_data[$itemId];
 	}
 
 	function child($path, $data){
