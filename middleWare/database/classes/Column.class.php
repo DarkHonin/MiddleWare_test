@@ -4,7 +4,7 @@ namespace DB;
 
 class Column extends \App\DataObject{
 
-	private const _FORMAT = ":name :t(:s) :n :d :ai";
+	private const _FORMAT = ":name :t:s :n :d :ai";
 
 	private const _FIELDS = [
 		"name" => "",
@@ -33,7 +33,22 @@ class Column extends \App\DataObject{
 		return self::_FIELDS;
 	}
 
+	private function has_size(){
+		$text = ["BOOL", "DATETIME"];
+		$data = $this->get_data()['t'];
+		foreach($text as $t)
+			if ($data === $t)
+				return false;
+		return true;
+	}
+
+	function get_size(){
+		return ($this->get_data()['s']);
+	}
+
 	function __toString(){
+		if($this->has_size())
+			$this->add_data("(".$this->get_size().")", "s");
 		return $this->assemble();
 	}
 }

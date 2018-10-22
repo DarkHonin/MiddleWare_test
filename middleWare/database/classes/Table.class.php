@@ -23,6 +23,10 @@ abstract class Table extends Query{
 		$this->_altered = array_keys($values);
 	}
 
+	final function get_col($id){
+		return $this->_cols[$id];
+	}
+
 	function create() : Query{
 		$this->push_query("CREATE_TABLE");
 		$this->add_data($this->get_name(), "tdname");
@@ -45,6 +49,19 @@ abstract class Table extends Query{
 		else
 			$this->add_data($what, "what");
 		$this->add_data($this->get_name(), "table");
+		return $this;
+	}
+
+	function limit($amount){
+		$this->push_query("LIMIT");
+		$this->add_data($amount, "amount");
+		return $this;
+	}
+
+	function order($col, int $dir = 0){
+		$this->push_query("SORT");
+		$this->add_data($col, "col");
+		$this->add_data(($dir == 1 ? "ASC" : "DESC"), "dir");
 		return $this;
 	}
 

@@ -24,6 +24,8 @@ abstract class DataObject{
 		$this->_data[$key] = $data;
 	}
 
+	function get_open_delim(){ return ":"; }
+
 	abstract function get_data_fields() : array;
 
 	abstract function get_query_string(): string;
@@ -31,7 +33,7 @@ abstract class DataObject{
 	function assemble(){
 		$str = $this->get_query_string();
 		foreach($this->get_data() as $k=>$v)
-			$str = str_replace(":$k", $v, $str);
+			$str = str_replace($this->get_open_delim()."$k", $v, $str);
 		return ($str);
 	}
 }

@@ -2,8 +2,9 @@
 
 use DB\Table;
 use DB\Column;
+use App\Form;
 
-class User extends Table{
+class User extends Table implements Form{
 
 	public $id;
 	public $username;
@@ -33,11 +34,19 @@ class User extends Table{
 			"t" => "VARCHAR",
 			"s" => 255
 		]));
+		$this->register_col(new Column("active",[
+			"t" => "BOOL",
+			"d" => false
+		]));
 		$this->register_col(new Column("token",[
 			"t" => "VARCHAR",
 			"s" => 255
 		]));
 		
+	}
+
+	function get_create_fields() : array{
+		return ["Username"=>$this->get_col("username"), "Email"=>$this->get_col("email"), "Password"=>$this->get_col("pass")];
 	}
 }
 

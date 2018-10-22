@@ -13,14 +13,11 @@ class ERegister extends Entry{
 	}
 
 	function render(){
-		require_once("app/parts/body.php");
+		$form = \DB\Table::$TABLES['Users'];
+		include_once("app/parts/register.php");
 	}
 	
 	function get($params){
-		var_dump($params);
-	}
-
-	function post($params){
 		
 	}
 }

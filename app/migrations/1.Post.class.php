@@ -15,6 +15,9 @@ class Post extends DB\Table{
 			"t" => "VARCHAR",
 			"s" => 32
 		]));
+		$this->register_col(new Column("post_dt",[
+			"t" => "DATETIME"
+		]));
 		$this->foreignKey(new Column("author", [
 			"t" => "INT",
 			"s" => 32

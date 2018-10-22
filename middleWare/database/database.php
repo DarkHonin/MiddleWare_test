@@ -5,7 +5,7 @@ namespace DB;
 function handle_migration_name($d){
 	$name = substr($d, strpos($d, ".") + 1, strpos($d, ".", strpos($d, ".") + 1) - 2);
 	$table = new $name();
-	Table::$TABLES[$name] = $table;
+	Table::$TABLES[$table->get_name()] = $table;
 }
 
 function init(){

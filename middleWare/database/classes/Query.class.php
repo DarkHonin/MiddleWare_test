@@ -7,6 +7,8 @@ abstract class Query extends \App\DataObject{
 	private const QUERY_STRINGS = [
 		"SELECT" => "SELECT :what FROM :table",
 		"WHERE" => "WHERE :query",
+		"LIMIT" => "LIMIT :amount",
+		"SORT" => "ORDER BY :col :dir",
 		"CREATE_TABLE" => "CREATE TABLE :ine `:tdname` ( :cols )",
 		"CREATE_DB" => "CREATE DATABASE :ine `:tdname`",
 		"INSERT" =>	"INSERT INTO :table ( :cols ) VALUES ( \":vals \")",

@@ -1,9 +1,8 @@
 <ul class="pnav">
-    <li><</li>
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-    <li>5</li>
-    <li>></li>
+    <?php
+        for($s = $self->item("start"); $s <= $self->item("pages"); $s++){
+            echo "<li".($s==$self->item("current") ? " class='active'" : "")."><a href='?page=$s'>$s</a></li>";
+        }
+    
+    ?>
 </ul>

@@ -19,10 +19,7 @@ final class FRONT{
 				$path = "$p/$part_name.php";
 			}
 		}
-		ob_start();
-		include $path;
-		$raw = ob_get_contents();
-		ob_end_clean();
+		$raw = file_get_contents($path);
 		return $raw;
 	}
 
