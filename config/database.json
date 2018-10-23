@@ -2,5 +2,8 @@
     "username" : "root",
     "password" : "password",
     "database" : "Camagru",
-    "migrations" : ["app/migrations", "middleWare/authentication/migrations"]
+    "migrations" : {
+        "\\" : "app/migrations", 
+        "AUTH": "middleWare/authentication/migrations"
+    }
 }

@@ -1,5 +1,5 @@
 
-<body>
+<body <?php $self->tags() ?>>
 
 <?php $self->children() ?>
 

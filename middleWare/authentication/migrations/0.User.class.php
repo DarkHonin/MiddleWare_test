@@ -2,9 +2,9 @@
 
 use DB\Table;
 use DB\Column;
-use App\Form;
 
-class User extends Table implements Form{
+use FRONT\Form;
+class User extends Table{
 
 	public $id;
 	public $username;
@@ -18,46 +18,35 @@ class User extends Table implements Form{
 
 	function load_cols(){
 		$this->primairyKey(new Column("id",[
-			"t" => "INT",
+			"t" => \App\DataType::$INT,
 			"s" => 32,
 			"ai" => "AUTO_INCREMENT"
 		]));
 		$this->uniqueKey(new Column("username",[
-			"t" => "VARCHAR",
+			"t" => \App\DataType::$TEXT,
 			"s" => 32
 		]));
 		$this->uniqueKey(new Column("email",[
-			"t" => "VARCHAR",
+			"t" => \App\DataType::$EMAIL,
 			"s" => 125
 		]));
 		$this->register_col(new Column("pass",[
-			"t" => "VARCHAR",
-			"s" => 255
+			"t" => \App\DataType::$PASSWORD,
+			"s" => 255,
+			"is_password" => true
 		]));
 		$this->register_col(new Column("active",[
 			"t" => "BOOL",
 			"d" => false
 		]));
 		$this->register_col(new Column("token",[
-			"t" => "VARCHAR",
+			"t" => \App\DataType::$TOKEN,
 			"s" => 255
 		]));
 		
 	}
 
-	function get_create_fields() : array{
-		return ["Username"=>$this->get_col("username"), "Email"=>$this->get_col("email"), "Password"=>$this->get_col("pass")];
-	}
-    function get_method(){
-		return "POST";
-	}
-    function get_token(){
-		return md5($this->get_name());
-	}
 
-	function validate(){
-		
-	}
 }
 
 

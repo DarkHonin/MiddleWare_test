@@ -7,13 +7,15 @@ abstract class FRONT{
 		self::$info = \CFG\readConfig("frontend");
 	}
 
-	public static function render_form(Form $form){
+	public static function render_form($form){
         $data = [
             "fields" => $form->get_create_fields(),
             "method" => $form->get_method(),
-            "token" => $form->get_token()
+            "token" => $form->get_token(),
+            "action" => $form->get_action(),
+            "submit" => $form->get_submit_text()
         ];
-        (new Runner("app/parts/form/form.php", data))->build();
+        (new \FRONT\Runner("app/parts/form/form.php", $data))->build();
     }
 }
 

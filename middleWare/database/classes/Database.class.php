@@ -39,9 +39,14 @@ abstract class Database extends Query{
 			echo ("The database is not ready, please run install\n");
 			die();
 		}
+
 		$query = $dt->assemble();
 		$raw = $this->_pdo->prepare($query);
-		$raw->execute();
+		try{
+			$raw->execute();
+		}catch(\PDOException $e){
+			\ACCESS\redirect("/error","message='".$raw->errorInfo()[2]."'&code=".$raw->errorInfo()[1]."");
+		}
 		return $raw;
 	}
 

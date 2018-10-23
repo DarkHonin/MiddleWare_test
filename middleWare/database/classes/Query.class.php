@@ -55,7 +55,8 @@ abstract class Query extends \App\DataObject{
 		try {
 			$data = $this->retrieve($raw);
 		}	catch (\PDOException $e){
-			print_r($e->getCode()."\n");
+			if(($e->errorInfo[0] == "HY000"))
+				return true;
 			$str = $this->_errorhanlders[$e->errorInfo[0]];
 			if($this->$str($e)) die ("Crittical error :: $str");
 		}

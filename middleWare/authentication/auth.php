@@ -2,6 +2,8 @@
 
 namespace AUTH;
 
-
+function init(){
+    
+}
 
 ?>

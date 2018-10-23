@@ -13,6 +13,7 @@ function configMiddleware(){
 	foreach($mods["MIDDLEWARE"] as $ID => $mod)
         $middleware[$ID] = __DIR__."/$mod";
     load_files(__DIR__."/classes");
+    DataType::init();
 }
 
 function load_module($ID){

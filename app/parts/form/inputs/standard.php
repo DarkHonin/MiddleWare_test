@@ -1,0 +1,5 @@
+<input <?php
+
+   $self->tags();
+    ?>
+>

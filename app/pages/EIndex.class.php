@@ -18,15 +18,15 @@ class EIndex extends Entry{
 	}
 
 	function render(){
-		$elem = new \FRONT\Runner("app/parts/page.php", [
+		$elem = new \FRONT\Runner("app/parts/structure/page.php", [
 			"children" => [
-				"app/parts/body.php" => 
+				"app/parts/structure/body.php" => 
 				[
 					"children" => [
 						"app/parts/index.php"=>[
 						"posts"=>$this->_posts,
 						"children" =>[
-							"app\parts\pagenagtion.php" => [
+							"app/parts/pagenagtion.php" => [
 									"pages"=>5,
 									"current"=>$this->_page,
 									"start"=>1

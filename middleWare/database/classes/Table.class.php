@@ -107,7 +107,14 @@ abstract class Table extends Query{
 		$this->add_data(implode(", ", $keys), "cols");
 		$vals = [];
 		foreach($keys as $p)
-			array_push($vals, $this->$p);
+			if(isset($this->$p))
+				array_push($vals, $this->$p);
+			else{
+				if (!empty($par = $this->_cols[$p]->get_data()['d']))
+					array_push($vals, $par);
+				else
+					die("Required field $p not valid");
+			}
 		$this->add_data(implode("\", \"", $vals), "vals");
 		return $this;
 	}
@@ -120,7 +127,11 @@ abstract class Table extends Query{
 		array_pop($keys);
 		$pars = [];
 		foreach ($keys as $k)
-			array_push($pars, "$k='{$this->$k}'");
+			if(isset($this->$k))
+				array_push($pars, "$k='{$this->$k}'");
+			else
+				$keys[$k] = "";
+		$keys= array_filter($keys);
 		$this->add_data(implode(", ",$pars), "set");
 		return $this;
 	}

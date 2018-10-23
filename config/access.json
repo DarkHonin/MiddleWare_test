@@ -1,3 +1,7 @@
 {
-	"ENTRIES" : "app/pages"
+	"ENTRIES" : { 
+		"ACCESS":"middleware/access/pages", 
+		"\\": "app/pages", 
+		"AUTH": "middleware/authentication/pages"
+		}
 }

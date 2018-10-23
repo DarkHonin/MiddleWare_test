@@ -2,7 +2,7 @@
 
 namespace DB;
 
-class Column extends \App\DataObject{
+class Column extends \App\DataObject implements \FRONT\FormField{
 
 	private const _FORMAT = ":name :t:s :n :d :ai";
 
@@ -50,6 +50,14 @@ class Column extends \App\DataObject{
 		if($this->has_size())
 			$this->add_data("(".$this->get_size().")", "s");
 		return $this->assemble();
+	}
+
+	function get_field_type(){
+		return $this->get_data()['t']->FORM_TYPE;
+	}
+
+	function required(){
+		return ($this->get_data()['n'] === self::_FIELDS['n']);
 	}
 }
 

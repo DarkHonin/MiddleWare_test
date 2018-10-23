@@ -11,7 +11,7 @@
 
 	function init(){
 		$cfg = \CFG\readConfig("access");
-		foreach([$cfg['ENTRIES'], __DIR__."/pages"] as $p)
+		foreach($cfg['ENTRIES'] as $p)
 			if(file_exists($p))
 				\APP\load_files($p, "ACCESS\\handle_page_name");
 	}
@@ -26,8 +26,11 @@
 		return $ret;
 	}
 
-	function redirect($id){
-		header("Location: ".Entry::$ENTRIES[$id]::get_ID());
+	function redirect($id, $params=null){
+		if($params)
+			header("Location: ".Entry::$ENTRIES[$id]::get_ID()."?$params");
+		else
+			header("Location: ".Entry::$ENTRIES[$id]::get_ID());
 		die();
 	}
 
